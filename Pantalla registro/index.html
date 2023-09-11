@@ -8,53 +8,148 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/styles.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#form-signup").on('submit', e =>{
+                    e.preventDefault();
+                }).validate({
+                    rules:{
+                        username:{
+                            required: true,
+                            minlength: 3
+                        },
+                        rut:{
+                            required: true, 
+                            maxlength: 10,
+                            minlength: 10
+                        },
+                        email:{
+                            required: true, 
+                            email: true
+                        }, 
+                        tel:{
+                            required: false, 
+                            minlength: 9, 
+                            maxlength: 9
+                        },
+                        region:{
+                            required: true
+                        },
+                        comuna:{
+                            required: true 
+                        }, 
+                        password:{
+                            required: true,
+                            minlength: 5 
+                        }, 
+                        passwordConf:{
+                            required: true, 
+                            minlength:5,
+                            equalTo:"#password"
+                        },
+                        terms:{
+                            required:true
+                        }
+
+
+                    }, 
+                    messages:{
+                        username:{
+                            required:"Debe ingresar su nombre",
+                            minlength:"El nombre debe tener al menos 3 caracteres"
+                        },
+                        rut:{
+                            required:"Debe ingresar su rut",
+                            maxlength:"El rut ingresado debe ser de 10 caracteres",
+                            minlength:"El rut ingresado debe ser de 10 caracteres"
+                        },
+                        email:{
+                            required:"Debe ingresar un email",
+                            email:"El email debe ser valido"
+                        },
+                        tel:{
+                            minlength:"El telefono ingresado debe ser de 9 digitos",
+                            maxlength:"El telefono ingresado debe ser de 9 digitos"
+                        }, 
+                        region:{
+                            required:"Debe seleccionar una region",
+                        },
+                        comuna:{
+                            required:"Debe seleccionar una comuna",
+                        },
+                        password:{
+                            required: "Debe ingresar una contraseña",
+                            minlength: "La contraseña debe ser de al menos 5 caracteres"
+                        },
+                        passwordConf:{
+                            required: "Debe confirmar la contraseña",
+                            minlength: "La contraseña debe ser de al menos 5 caracteres",
+                            equalTo: "Las contraseñas deben coincidir"
+                        },
+                        terms:{
+                            required:""
+                        }
+
+                    },
+                    submitHandler: (form) =>{
+                        const data = Object.fromEntries(new FormData(form)); 
+                        console.log('Validado');
+                        console.log(data);
+                    }
+                });
+                
+            });
+        </script>
+
     </head>
     <body class="flex justify-center pt-16">
         <div class="w-1/2">
-            <form class="px-10 bg-gray-50 border rounded-md drop-shadow-lg">
+            <form id="form-signup" class="px-10 bg-gray-50 border rounded-md drop-shadow-lg">
                 <div>
                     <h1 class="text-4xl font-bold text-center pt-10">Crear una cuenta nueva</h1>
                     <p class="text-center py-10">Ingrese sus datos para crear su cuenta nueva, todos los campos son obligatorios a menos que se indique lo contrario</p>
                 </div>
                 <div class="grid grid-cols-8">
                     <div class="col-span-5 flex justify-center p-2">
-                        <input class=" placeholder-black border border-black rounded-md pl-2 w-full drop-shadow-lg py-1" type="text" id="username" placeholder="Nombre de usuario" required>
+                        <input class=" placeholder-black border border-black rounded-md pl-2 w-full drop-shadow-lg py-1" name="username" type="text" id="username" placeholder="Nombre de usuario">
                     </div>
 
                     <div class="col-span-3 flex justify-center p-2">
-                        <input class=" placeholder-black border border-black rounded-md pl-2 w-full drop-shadow-lg py-1" type="text" id="rut" placeholder="Rut (con guión y sin puntos)" required>
+                        <input class=" placeholder-black border border-black rounded-md pl-2 w-full drop-shadow-lg py-1" name="rut" type="text" id="rut" placeholder="Rut (con guión y sin puntos)">
                     </div>
 
                     <div class="col-span-4 flex justify-center p-2">
-                        <input class=" placeholder-black border border-black rounded-md pl-2 w-full drop-shadow-lg py-1" type="email" id="email" placeholder="Correo electrónico" required>
+                        <input class=" placeholder-black border border-black rounded-md pl-2 w-full drop-shadow-lg py-1" name="email" type="email" id="email" placeholder="Correo electrónico">
                     </div>
 
                     <div class="col-span-4 flex justify-center p-2">
-                        <input class=" placeholder-black border border-black rounded-md pl-2 w-full drop-shadow-lg py-1" type="tel" id="tel" placeholder="Teléfono (opcional)">
+                        <input class=" placeholder-black border border-black rounded-md pl-2 w-full drop-shadow-lg py-1" name="tel" type="tel" id="tel" placeholder="Teléfono (opcional)">
                     </div>
 
                     <div class="col-span-4 flex justify-center p-2">
-                        <select class="bg-white border border-black rounded-md pl-2 w-full drop-shadow-lg py-1" required>
+                        <select class="bg-white border border-black rounded-md pl-2 w-full drop-shadow-lg py-1" id="region" name="region">
                             <option value="" disabled selected>Región</option>
                         </select>
                     </div>
 
-                    <div class="col-span-4 flex justify-center p-2">
-                        <select class="bg-white border border-black rounded-md pl-2 w-full drop-shadow-lg py-1" required>
+                    <div class="col-span-4 flex justify-center p-2" id ="comuna" name="comuna">
+                        <select class="bg-white border border-black rounded-md pl-2 w-full drop-shadow-lg py-1">
                             <option value="" disabled selected>Comuna</option>
                         </select>
                     </div>
 
                     <div class="col-span-4 flex justify-center p-2">
-                        <input class=" placeholder-black border border-black rounded-md pl-2 w-full drop-shadow-lg py-1" type="password" id="password" placeholder="Contraseña" required>
+                        <input class=" placeholder-black border border-black rounded-md pl-2 w-full drop-shadow-lg py-1" name="password" type="password" id="password" placeholder="Contraseña">
                     </div>
 
                     <div class="col-span-4 flex justify-center p-2">
-                        <input class=" placeholder-black border border-black rounded-md pl-2 w-full drop-shadow-lg py-1" type="password" id="passwordConf" placeholder="Confirmar contraseña" required>
+                        <input class=" placeholder-black border border-black rounded-md pl-2 w-full drop-shadow-lg py-1" name="passwordConf" type="password" id="passwordConf" placeholder="Confirmar contraseña">
                     </div>
 
                     <div class="col-span-full p-2">
-                        <input class="drop-shadow-lg w-4 h-4" type="checkbox" id="terms" placeholder="Términos y condiciones" required>
+                        <input class="drop-shadow-lg w-4 h-4" name="terms" type="checkbox" id="terms" placeholder="Términos y condiciones">
                         <label for="checkbox">Acepto los términos y condiciones</label>
                     </div>
 
